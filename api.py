@@ -27,8 +27,8 @@ def api_breaking():
   ]
   return jsonify(result)
 
-@app.route('/api/review/<prof_id>', methods=['GET'])
-def get_review(prof_id):
+@app.route('/api/review', methods=['GET'])
+def get_review():
     conn = pymysql.connect(
         db='findyourprof',
         user='root',
@@ -36,14 +36,16 @@ def get_review(prof_id):
         host='localhost')
 
     c = conn.cursor()
-    c.execute("SELECT * from review WHERE prof_id = %s;", (prof_id))
+    c.execute("SELECT * from review;")
 
     prof_reviews = [{
-        'prof_id': row[0],
-        'review_id': row[1],
-        'rating': row[2],
-        'review': row[3],
-        'recommended': row[4]
+        'review_id': row[0],
+        'rating': row[1],
+        'comment': row[2],
+        'advice': row[3],
+        'meetup': row[4],
+        'studentId': row[5],
+        'profId': row[6]
     } for row in c.fetchall()]
 
 
