@@ -1,0 +1,13 @@
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat');
+.landing-title {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+}
+.landing-banner {
+    min-height: 300px;
+}
+body {
+    background-image: linear-gradient(-90deg, rgb(0, 132, 255),cyan);
+} */
