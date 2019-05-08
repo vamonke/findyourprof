@@ -1,19 +1,23 @@
+import os
 from flask import Flask, jsonify, render_template
-# import pymongo
 from pprint import pprint
 import pymysql
+from authlib.client import OAuth2Session
+import google.oauth2.credentials
+import googleapiclient.discovery
+import google_auth
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
-
-# mongoCLient = pymongo.MongoClient("mongodb://localhost:27017/")
-# db = mongoCLient["fyfypp"]
-# users = db["users"]
-# profs = db["profs"]
+app.config['DEBUG'] = True
+app.secret_key = os.environ.get("SECRET_KEY") or "1234567"
+app.register_blueprint(google_auth.app)
 
 @app.route('/', methods=['GET'])
 def home():
-  return render_template("index.html")
+    if google_auth.is_logged_in():
+        user = google_auth.get_user_info()
+        return render_template('index.html', user=user)
+    return render_template('index.html')
 
 @app.route('/api/profs', methods=['GET'])
 def api_breaking():

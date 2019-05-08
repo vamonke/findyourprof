@@ -16,16 +16,23 @@
   <body>
     <div class="container-fluid">
       <div class="row landing-banner">
-        <div class="col-12">
+        <div class="col-8">
           <h1 class="landing-title">Find Your FYP Prof</h1>
+        </div>
+        <div class="col-4">
+          {% if user %}
+            {{ user['email'] }}
+            <a href="/logout" class="btn btn-primary" role="button" aria-pressed="true">Logout</a>
+          {% else %}
+            You are not currently logged in. <a href="/login">Log in</a>
+          {% endif %}
         </div>
       </div>
     </div>
-    
-    <p>
-      <ul>
+    <ul>
+      <li>
         <a href="http://127.0.0.1:5000/api/profs">/api/profs</a>
-      </ul>
-    </p>
+      </li>
+    </ul>
   </body>
 </html>
