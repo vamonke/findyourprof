@@ -1,11 +1,14 @@
 import os
 from flask import Flask, jsonify, render_template
+from pprint import pprint
+import pymysql
 from authlib.client import OAuth2Session
 import google.oauth2.credentials
 import googleapiclient.discovery
 import google_auth
 
 app = Flask(__name__)
+app.config['DEBUG'] = True
 app.secret_key = os.environ.get("SECRET_KEY") or "1234567"
 app.register_blueprint(google_auth.app)
 
@@ -13,7 +16,6 @@ app.register_blueprint(google_auth.app)
 def home():
     if google_auth.is_logged_in():
         user = google_auth.get_user_info()
-        print(user)
         return render_template('index.html', user=user)
     return render_template('index.html')
 
@@ -28,5 +30,32 @@ def api_breaking():
     }
   ]
   return jsonify(result)
+
+@app.route('/api/review', methods=['GET'])
+def get_review():
+    conn = pymysql.connect(
+        db='findyourprof',
+        user='root',
+        passwd='',
+        host='localhost')
+
+    c = conn.cursor()
+    c.execute("SELECT * from review;")
+
+    prof_reviews = [{
+        'review_id': row[0],
+        'rating': row[1],
+        'comment': row[2],
+        'advice': row[3],
+        'meetup': row[4],
+        'studentId': row[5],
+        'profId': row[6]
+    } for row in c.fetchall()]
+
+
+    c.close()
+    conn.close()
+    return jsonify(prof_reviews)
+
 
 app.run()
