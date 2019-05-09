@@ -53,16 +53,47 @@ def view_review():
 
 
 @app.route('/api/profs', methods=['GET'])
-def api_breaking():
-  result = [
-    {
-      'id': '123',
-      'name': 'Varick Lim',
-      'school': 'School of Electrical and Electronic Engineering'
-    }
-  ]
-  return jsonify(result)
+def get_profs():
+    conn = pymysql.connect(
+        db='findyourprof',
+        user='root',
+        passwd='',
+        host='localhost')
 
+    c = conn.cursor()
+    c.execute("SELECT * from prof;")
+
+    profs = [{
+        'id': row[0],
+        'name': row[1],
+        'school': row[2],
+    } for row in c.fetchall()]
+
+    c.close()
+    conn.close()
+    return jsonify(prof_reviews)
+
+@app.route('/api/prof/<prof_id>', methods=['GET'])
+def get_prof(prof_id):
+    conn = pymysql.connect(
+        db='findyourprof',
+        user='root',
+        passwd='',
+        host='localhost')
+
+    c = conn.cursor()
+    c.execute("SELECT * from prof where id = %s;", (prof_id))
+    row = c.fetchone()
+
+    prof = {
+        'id': row[0],
+        'name': row[1],
+        'school': row[2]
+    }
+
+    c.close()
+    conn.close()
+    return jsonify(prof)
 
 @app.route('/api/review', methods=['GET'])
 def get_review():

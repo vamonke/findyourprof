@@ -3,14 +3,18 @@
 Run `python api.py` and go to http://127.0.0.1:5000/.
 
 ## To do:
-- [ ] /api/profs    
-- [ ] /api/profs/:id
-- [v] /api/review
+- [x] /api/profs
+- [x] /api/profs/:id
+- [x] /api/review
+- [ ] Include rating for prof
+- [ ] Include average meet up for prof
 - [ ] Home page
-- [ ] Sign up
-- [v] Log in
+- [x] Log in
+- [x] Profs page
 - [ ] Prof page
-- [ ] Submit review
+- Submit review
+  - [ ] POST /api/review
+  - [ ] Submit review page
 
 
 ## APIs
