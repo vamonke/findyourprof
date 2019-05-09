@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, redirect
 from pprint import pprint
 import pymysql
 from authlib.client import OAuth2Session
@@ -7,6 +7,7 @@ import google.oauth2.credentials
 import googleapiclient.discovery
 
 import google_auth
+import Prof
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -54,46 +55,25 @@ def view_review():
 
 @app.route('/api/profs', methods=['GET'])
 def get_profs():
-    conn = pymysql.connect(
-        db='findyourprof',
-        user='root',
-        passwd='',
-        host='localhost')
-
-    c = conn.cursor()
-    c.execute("SELECT * from prof;")
-
-    profs = [{
-        'id': row[0],
-        'name': row[1],
-        'school': row[2],
-    } for row in c.fetchall()]
-
-    c.close()
-    conn.close()
-    return jsonify(prof_reviews)
+    profs = Prof.get_profs()
+    return jsonify(profs)
 
 @app.route('/api/prof/<prof_id>', methods=['GET'])
 def get_prof(prof_id):
-    conn = pymysql.connect(
-        db='findyourprof',
-        user='root',
-        passwd='',
-        host='localhost')
-
-    c = conn.cursor()
-    c.execute("SELECT * from prof where id = %s;", (prof_id))
-    row = c.fetchone()
-
-    prof = {
-        'id': row[0],
-        'name': row[1],
-        'school': row[2]
-    }
-
-    c.close()
-    conn.close()
+    prof = Prof.get_prof(prof_id)
     return jsonify(prof)
+
+@app.route('/prof/<prof_id>', methods=['GET'])
+def prof(prof_id):
+    prof = Prof.get_prof(prof_id)
+    if (prof == None):
+        return redirect('/')
+    reviews = Prof.get_prof_reviews(prof_id)
+    user = None
+    if google_auth.is_logged_in():
+        user = google_auth.get_current_user()
+    
+    return render_template('prof.html', prof=prof, user=user, reviews=reviews)
 
 @app.route('/api/review', methods=['GET'])
 def get_review():
