@@ -14,10 +14,10 @@ with open('review.csv', encoding='utf-8-sig') as csvfile:
     c = conn.cursor()
     for row in readCSV:
         print(row)
-        # print(str(uuid.uuid4()))
+        studentId = str(uuid.uuid4())
+        c.execute("INSERT INTO student (id, email) VALUES (%s, %s);", (studentId, str(row[0])))
         c.execute("INSERT INTO review (id, rating, comment, advice, meetup, studentId, profId) VALUES (%s, %s, %s, %s, %s, %s, %s);",
-                  (str(uuid.uuid4()), float(row[0]), row[1], row[2], row[3], str(uuid.uuid4()), str(uuid.uuid4())))
-
+                  (str(uuid.uuid4()), float(row[1]), row[2], row[3], row[4], studentId, str(uuid.uuid4())))
 
         conn.commit()
 
