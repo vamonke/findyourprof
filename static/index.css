@@ -1,13 +1,19 @@
-/* @import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+.header {
+    padding: 10px;
+}
 .landing-title {
-    font-family: 'Montserrat', sans-serif;
-    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+    /* text-transform: uppercase; */
     text-align: center;
     color: white;
+    font-weight: 300;
+    top: 25%;
+    position: relative;
+    display: block;
+
 }
 .landing-banner {
     min-height: 300px;
+    background-color: #508FF5;
 }
-body {
-    background-image: linear-gradient(-90deg, rgb(0, 132, 255),cyan);
-} */
