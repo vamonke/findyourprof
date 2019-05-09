@@ -58,8 +58,7 @@ def api_breaking():
     {
       'id': '123',
       'name': 'Varick Lim',
-      'school': 'School of Electrical and Electronic Engineering',
-      'research': ['topic1', 'topic2', 'topic3', 'topic4']
+      'school': 'School of Electrical and Electronic Engineering'
     }
   ]
   return jsonify(result)
