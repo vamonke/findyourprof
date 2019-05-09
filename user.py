@@ -5,7 +5,7 @@ def get_or_insert_user(email):
     conn = pymysql.connect(
         db='findyourprof',
         user='root',
-        passwd='password',
+        passwd='',
         host='localhost')
     c = conn.cursor()
     c.execute("SELECT id FROM student WHERE email=%s", email)
@@ -27,7 +27,7 @@ def get_user(id):
     conn = pymysql.connect(
         db='findyourprof',
         user='root',
-        passwd='password',
+        passwd='',
         host='localhost')
     c = conn.cursor()
     c.execute("SELECT * FROM student WHERE id=%s", id)
