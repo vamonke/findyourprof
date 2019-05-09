@@ -1,13 +1,14 @@
 import os
-from flask import Flask, jsonify, render_template
+import flask
 from pprint import pprint
 import pymysql
 from authlib.client import OAuth2Session
 import google.oauth2.credentials
 import googleapiclient.discovery
+
 import google_auth
 
-app = Flask(__name__)
+app = flask.Flask(__name__)
 app.config['DEBUG'] = True
 app.secret_key = os.environ.get("SECRET_KEY") or "1234567"
 app.register_blueprint(google_auth.app)
@@ -18,9 +19,9 @@ app.register_blueprint(google_auth.app)
 @app.route('/', methods=['GET'])
 def home():
     if google_auth.is_logged_in():
-        user = google_auth.get_user_info()
-        return render_template('index.html', user=user)
-    return render_template('index.html')
+        user = google_auth.get_current_user()
+        return flask.render_template('index.html', user=user)
+    return flask.render_template('index.html')
 
 
 @app.route('/review', methods=['GET'])
@@ -63,7 +64,7 @@ def api_breaking():
       'research': ['topic1', 'topic2', 'topic3', 'topic4']
     }
   ]
-  return jsonify(result)
+  return flask.jsonify(result)
 
 @app.route('/api/review', methods=['GET'])
 def get_review():
@@ -89,7 +90,7 @@ def get_review():
 
     c.close()
     conn.close()
-    return jsonify(prof_reviews)
+    return flask.jsonify(prof_reviews)
 
 
 app.run()
