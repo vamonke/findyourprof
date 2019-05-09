@@ -14,10 +14,10 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="container-fluid">
-      <div class="row landing-banner">
+    <div class="container">
+      <div class="row header">
         <div class="col-8">
-          <h1 class="landing-title">Find Your FYP Prof</h1>
+          <p>FYP</p>
         </div>
         <div class="col-4">
           {% if user %}
@@ -29,10 +29,24 @@
         </div>
       </div>
     </div>
-    <ul>
-      <li>
-        <a href="http://127.0.0.1:5000/api/profs">/api/profs</a>
-      </li>
-    </ul>
+
+    <div class="container-fluid">
+      <div class="row landing-banner">
+        <div class="col-12">
+          <h1 class="landing-title">FIND YOUR FYP PROF</h1>
+          <p class="landing-title">A Professor Search Engine</p>
+        </div>
+
+        <div class="col-4"></div>
+        <div class="col-4">
+          <a href="http://127.0.0.1:5000/api/profs" class="btn btn-outline-light">Browse Prof</a>
+          <a href="http://127.0.0.1:5000/api/review" class="btn btn-outline-light">Browse All Review</a>
+        </div>
+        <div class="col-4"></div>
+      </div>
+    </div>
+
+  
+    
   </body>
 </html>

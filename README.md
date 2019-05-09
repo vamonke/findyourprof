@@ -5,10 +5,10 @@ Run `python api.py` and go to http://127.0.0.1:5000/.
 ## To do:
 - [ ] /api/profs    
 - [ ] /api/profs/:id
-- [ ] /api/review
+- [v] /api/review
 - [ ] Home page
 - [ ] Sign up
-- [ ] Log in
+- [v] Log in
 - [ ] Prof page
 - [ ] Submit review
 
