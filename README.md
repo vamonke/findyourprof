@@ -6,15 +6,15 @@ Run `python api.py` and go to http://127.0.0.1:5000/.
 - [x] /api/profs
 - [x] /api/profs/:id
 - [x] /api/review
-- [ ] Include rating for prof
+- [x] Include rating for prof
 - [ ] Include average meet up for prof
 - [ ] Home page
 - [x] Log in
 - [x] Profs page
 - [x] Prof page
 - Submit review
-  - [ ] POST /api/review
-  - [ ] Submit review page
+- - [ ] POST /api/review
+- - [ ] Submit review page
 
 
 ## APIs

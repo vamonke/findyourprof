@@ -8,20 +8,27 @@ def get_prof(profId):
         host='localhost')
 
     c = conn.cursor()
-    c.execute("SELECT * from prof where id = %s;", (profId))
+    c.execute("SELECT * FROM prof WHERE id = %s;", (profId))
     row = c.fetchone()
+
+    if (len(row) == 0):
+        c.close()
+        conn.close()
+        return None
+
+    prof = {
+        'id': row[0],
+        'name': row[1],
+        'school': row[2]
+    }
+    
+    c.execute("SELECT ROUND(AVG(rating), 1) AS rating FROM review WHERE profId = %s;", (prof['id']))
+    row = c.fetchone()
+    if (row[0]):
+        prof['rating'] = row[0]
     c.close()
     conn.close()
-
-    if (row):
-        prof = {
-            'id': row[0],
-            'name': row[1],
-            'school': row[2]
-        }
-        return prof
-    
-    return None
+    return prof
 
 
 def get_profs():
