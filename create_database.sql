@@ -1,21 +1,23 @@
 CREATE DATABASE IF NOT EXISTS findyourprof;
 USE findyourprof;
 
+DROP TABLE IF EXISTS review;
+DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS prof;
+
 CREATE TABLE prof (
   id varchar(255) PRIMARY KEY,
-  name varchar(255), school varchar(255), 
+  name varchar(255),
+  school varchar(255),
   createdAt timestamp NOT NULL default CURRENT_TIMESTAMP
 );
 
-DROP TABLE IF EXISTS user;
-CREATE TABLE user (
+CREATE TABLE student (
   id varchar(255) PRIMARY KEY,
   email varchar(255) NOT NULL,
   createdAt timestamp NOT NULL default CURRENT_TIMESTAMP
 );
 
-DROP TABLE IF EXISTS review;
 CREATE TABLE review (
   id varchar(255) PRIMARY KEY,
   rating float(2,1),
