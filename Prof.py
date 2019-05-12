@@ -43,7 +43,7 @@ def get_prof(profId):
     }
     
     query = "SELECT ROUND(AVG(rating), 1) AS rating, AVG(meetup) AS meetup FROM review WHERE profId = '%s';" % (prof['id'])
-    print(query)
+    # print(query)
 
     c.execute(query)
     row = c.fetchone()
@@ -63,7 +63,7 @@ def get_profs():
         host='localhost')
 
     c = conn.cursor()
-    c.execute("SELECT * from prof;")
+    c.execute("SELECT * from prof ORDER BY name ASC;")
 
     profs = [{
         'id': row[0],

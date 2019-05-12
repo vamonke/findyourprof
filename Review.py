@@ -84,7 +84,7 @@ def add_review(review):
     profId = review['profId']
     
     query = "INSERT INTO review (id, rating, comment, advice, meetup, studentId, profId) VALUES ('%s', %s, '%s', '%s', %s, '%s', '%s');" % (id, rating, comment, advice, meetup, studentId, profId)
-    print(query)
+    # print(query)
     c.execute(query)
     conn.commit()
     c.close()

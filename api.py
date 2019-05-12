@@ -30,6 +30,15 @@ def view_review():
         user = google_auth.get_current_user()
     return render_template('review.html', reviews=reviews, user=user)
 
+
+@app.route('/review/submit', methods=['GET'])
+def submit_review():
+    if google_auth.is_logged_in():
+        user = google_auth.get_current_user()
+        profs = Prof.get_profs()
+        return render_template('submit_review.html', user=user, profs=profs)
+    return redirect('/login')
+
 @app.route('/prof/<prof_id>', methods=['GET'])
 def view_prof(prof_id):
     prof = Prof.get_prof(prof_id)
@@ -60,16 +69,9 @@ def get_review():
 
 @app.route('/api/review', methods=['POST'])
 def post_review():
-    review = request.json
-    
-    # rating = json['rating'] if 'rating' in json else None
-    # comment = json['comment'] if 'comment' in json else None
-    # advice = json['advice'] if 'advice' in json else None
-    # meetup = json['meetup'] if 'meetup' in json else None
-    # studentId = json['studentId']
-    # profId = json['profId']
-
-    id = Review.add_review(review)
-    return id
+    form = request.form
+    Review.add_review(form)
+    prof_page = '/prof/' + form['profId']
+    return redirect(prof_page)
 
 app.run()

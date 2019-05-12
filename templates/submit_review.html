@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>FYFYPP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='review.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row header">
+            <div class="col-8">
+                <a href="/">FYP</a>
+            </div>
+            <div class="col-4">
+                {% if user %}
+                    {{ user['email'] }}
+                    <a href="/logout" class="btn btn-primary" role="button" aria-pressed="true">Logout</a>
+                    {% else %}
+                    You are not currently logged in. <a href="/login">Log in</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <form action="{{ url_for('post_review') }}" method="post">
+            <input type="hidden" name="studentId" value={{ user['id'] }}>
+            
+            Who is your FYP prof?
+            <select name="profId">
+                <option value="" selected disabled hidden>Select prof</option>
+                {% for prof in profs %}
+                    <option value={{ prof['id'] }}>{{ prof['name'] }}</option>
+                {% endfor %}
+            </select>
+            <br>
+
+            Rating (1-5): 
+            <select name="rating">
+                {% for value in range(2, 11) %}
+                    <option value={{ value/2 }}>{{ value/2 }}</option>
+                {% endfor %}
+            </select><br>
+            
+            Remarks:<br>
+            <textarea type="text" name="comment" placeholder="Remarks"></textarea><br>
+            
+            Advice for junors:<br>
+            <textarea type="text" name="advice" placeholder="Advice for juniors"></textarea><br>
+
+            How frequently did you meet your prof?
+            <select name="meetup">
+                <option value="" selected>Depends</option>
+                <option value="2">Once every few days</option>
+                <option value="7">Once a week</option>
+                <option value="14">Once every 2 weeks</option>
+                <option value="30">Once a month</option>
+                <option value="75">Once every few months</option>
+                <option value="135">Once per semester</option>
+                <option value="270">Once</option>
+            </select>
+            <br>
+            <input type="submit">
+        </form>
+    </div>
+
+
+
+</body>
+
+</html>
