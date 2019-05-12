@@ -23,10 +23,10 @@ CREATE TABLE review (
   rating float(2,1),
   comment text(1000),
   advice text(500),
-  meetup text(100),
+  meetup int(5),
   studentId varchar(255),
   profId varchar(255),
   createdAt timestamp NOT NULL default CURRENT_TIMESTAMP,
-  CONSTRAINT reviewFK1 FOREIGN KEY (studentId) REFERENCES student(id)
-  -- CONSTRAINT reviewFK2 FOREIGN KEY (profId) REFERENCES prof(id)
+  CONSTRAINT reviewFK1 FOREIGN KEY (studentId) REFERENCES student(id),
+  CONSTRAINT reviewFK2 FOREIGN KEY (profId) REFERENCES prof(id)
 );

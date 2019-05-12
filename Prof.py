@@ -1,5 +1,25 @@
 import pymysql
 
+def getMeetup(days):
+    if (days == None):
+        return 'Depends'
+    elif days < 5: # 1-4
+        return 'Once every few days'
+    elif days < 11: # 5-10
+        return 'Once a week'
+    elif days < 20: # 11-19
+        return 'Once every 2 weeks'
+    elif days < 50: # 20-49
+        return 'Once a month'
+    elif days < 100: # 50-99
+        return 'Once every few months'
+    elif days < 150: # 100-149
+        return 'Once per semester'
+    elif days < 300: # 150-299
+        return 'Once'
+    else:
+        return None
+
 def get_prof(profId):
     conn = pymysql.connect(
         db='findyourprof',
@@ -22,10 +42,14 @@ def get_prof(profId):
         'school': row[2]
     }
     
-    c.execute("SELECT ROUND(AVG(rating), 1) AS rating FROM review WHERE profId = %s;", (prof['id']))
+    query = "SELECT ROUND(AVG(rating), 1) AS rating, AVG(meetup) AS meetup FROM review WHERE profId = '%s';" % (prof['id'])
+    print(query)
+
+    c.execute(query)
     row = c.fetchone()
-    if (row[0]):
+    if (row):
         prof['rating'] = row[0]
+        prof['meetup'] = getMeetup(row[1])
     c.close()
     conn.close()
     return prof
@@ -67,7 +91,7 @@ def get_prof_reviews(profId):
         'rating': row[1],
         'comment': row[2],
         'advice': row[3],
-        'meetup': row[4],
+        'meetup': getMeetup(row[4]),
         'studentId': row[5],
         'profId': row[6]
     } for row in c.fetchall()]

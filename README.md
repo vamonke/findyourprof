@@ -7,7 +7,7 @@ Run `python api.py` and go to http://127.0.0.1:5000/.
 - [x] /api/profs/:id
 - [x] /api/review
 - [x] Include rating for prof
-- [ ] Include average meet up for prof
+- [x] Include average meet up for prof
 - [ ] Home page
 - [x] Log in
 - [x] Profs page
