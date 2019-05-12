@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, jsonify, redirect
+from flask import Flask, render_template, jsonify, redirect, request
 from pprint import pprint
 import pymysql
 from authlib.client import OAuth2Session
@@ -57,5 +57,19 @@ def get_prof(prof_id):
 def get_review():
     reviews = Review.get_reviews()
     return jsonify(reviews)
+
+@app.route('/api/review', methods=['POST'])
+def post_review():
+    review = request.json
+    
+    # rating = json['rating'] if 'rating' in json else None
+    # comment = json['comment'] if 'comment' in json else None
+    # advice = json['advice'] if 'advice' in json else None
+    # meetup = json['meetup'] if 'meetup' in json else None
+    # studentId = json['studentId']
+    # profId = json['profId']
+
+    id = Review.add_review(review)
+    return id
 
 app.run()

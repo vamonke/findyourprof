@@ -1,4 +1,5 @@
 import pymysql
+import uuid
 
 def getMeetup(days):
     if (days == None):
@@ -26,7 +27,6 @@ def get_reviews():
         user='root',
         passwd='',
         host='localhost')
-
     c = conn.cursor()
     c.execute("SELECT * from review;")
 
@@ -50,7 +50,6 @@ def get_prof_reviews(profId):
         user='root',
         passwd='',
         host='localhost')
-
     c = conn.cursor()
     c.execute("SELECT * from review where profId = %s;", (profId))
 
@@ -67,3 +66,27 @@ def get_prof_reviews(profId):
     c.close()
     conn.close()
     return prof_reviews
+
+def add_review(review):
+    conn = pymysql.connect(
+        db='findyourprof',
+        user='root',
+        passwd='',
+        host='localhost')
+    c = conn.cursor()
+
+    id = str(uuid.uuid4())
+    rating = review['rating'] if 'rating' in review else 'null'
+    comment = review['comment'] if 'comment' in review else ''
+    advice = review['advice'] if 'advice' in review else ''
+    meetup = review['meetup'] if 'meetup' in review else 'null'
+    studentId = review['studentId']
+    profId = review['profId']
+    
+    query = "INSERT INTO review (id, rating, comment, advice, meetup, studentId, profId) VALUES ('%s', %s, '%s', '%s', %s, '%s', '%s');" % (id, rating, comment, advice, meetup, studentId, profId)
+    print(query)
+    c.execute(query)
+    conn.commit()
+    c.close()
+    conn.close()
+    return id
